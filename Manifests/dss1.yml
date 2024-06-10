@@ -1,0 +1,96 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: yelp-camp-secrets
+type: Opaque
+data:
+  CLOUDINARY_CLOUD_NAME: ZHJoc3RoaWV2Cg==
+  CLOUDINARY_KEY: NjE4NzE2MzczNTY3MTIyCg==
+  CLOUDINARY_SECRET: S3RLSDV4VXBDbHBsaHh6WGhyTGpGeEVfX0xnCg==
+  MAPBOX_TOKEN: c2suZXlKMUlqb2laMjkzWkdGMmFXUjNZVzVvYlNJc0ltRWlPaUpqYkhnMGJHNDBZelF3TVdweE1teHpOVGhuWkdOeE4yMWhJbjAuaXRXVW5udFVydFZFNmNBcXBDZmFmZwo=
+  DB_URL: bW9uZ29kYitzcnY6Ly9nb3dkYXZpZHdhbmhtOjhJYkxVYWlqQUx3UEJHOHlAM3RpZXJhcHBsaWNhdGlvbi5mMHdvdnJvLm1vbmdvZGIubmV0Lz9yZXRyeVdyaXRlcz10cnVlJnc9bWFqb3JpdHkmYXBwTmFtZT0zVGllckFwcGxpY2F0aW9uCg==
+  SECRET: ZGV2b3Bzc2hhY2sK
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yelp-camp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yelp-camp
+  template:
+    metadata:
+      labels:
+        app: yelp-camp
+    spec:
+      containers:
+        - name: yelp-camp-container
+          image: gowdavidwanhm/campa:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: CLOUDINARY_KEY
+            - name: CLOUDINARY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: CLOUDINARY_SECRET
+            - name: MAPBOX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: MAPBOX_TOKEN
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: DB_URL
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: yelp-camp-secrets
+                  key: SECRET
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yelp-camp-service
+spec:
+  selector:
+    app: yelp-camp
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

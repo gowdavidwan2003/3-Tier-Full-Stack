@@ -3,14 +3,14 @@ describe('Simulated test suite', () => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1000); // 100 milliseconds delay
+    }, 1000); // 1 seconds delay
   });
 
   it('should pass unit test 2', (done) => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1500); // 150 milliseconds delay
+    }, 1500); // 1.5 seconds delay
   });
 
   it('should pass integration test', (done) => {
@@ -40,14 +40,14 @@ describe('Simulated test suite-1', () => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1000); // 100 milliseconds delay
+    }, 1000); // 1 seconds delay
   });
 
   it('should pass unit test 2', (done) => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1500); // 150 milliseconds delay
+    }, 1500); // 1.5 seconds delay
   });
 
 
@@ -58,14 +58,14 @@ describe('Simulated test suite-2', () => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1000); // 100 milliseconds delay
+    }, 1000); // 1 seconds delay
   });
 
   it('should pass unit test 2', (done) => {
     setTimeout(() => {
       expect(true).toBe(true);
       done();
-    }, 1500); // 150 milliseconds delay
+    }, 1500); // 1.5 seconds delay
   });
 
   it('should pass integration test', (done) => {

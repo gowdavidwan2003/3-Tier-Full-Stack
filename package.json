@@ -33,7 +33,7 @@
     "sanitize-html": "^1.27.4"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    
     "mongodb-memory-server": "^9.4.1",
     "supertest": "^7.0.0"
   }
